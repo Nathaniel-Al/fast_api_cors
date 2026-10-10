@@ -90,11 +90,12 @@ class SentimentRequest(BaseModel):
     sentences: List[str]
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {"status": "ok"}
 
 
+@app.post("/")
 @app.post("/sentiment")
 async def sentiment(req: SentimentRequest):
     return {"results": [{"sentence": s, "sentiment": classify(s)} for s in req.sentences]}
